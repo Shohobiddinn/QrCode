@@ -1,5 +1,17 @@
 <template>
   <div>
+    <!-- <div
+      class="flex flex-col max-h-[200px] overflow-x-scroll border-[3px] border-blue-500 mt-[100px]"
+      @scroll="scroll($event)"
+    >
+      <div
+        class="item text-[40px] text-center font-bold"
+        v-for="item in 20"
+        :key="item"
+      >
+        {{ item }}
+      </div>
+    </div> -->
     <div>
       <div class="container">
         <div class="flex justify-center items-center flex-col h-[100vh]">
@@ -151,6 +163,23 @@ export default {
       link.href = this.qrCodeImage;
       link.download = "qr_code.png";
       link.click();
+    },
+    scroll(event) {
+      const element = event.target;
+      if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
+        console.log("hello");
+        if (this.current_page < this.pages - 1) {
+          this.current_page = this.current_page + 1;
+        }
+      }
+    //   console.log(element.scrollTop );
+      if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
+        console.log(
+          element.scrollTop + element.clientHeight,
+          element.scrollHeight,
+          "shoh"
+        );
+      }
     },
   },
 };
