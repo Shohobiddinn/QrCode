@@ -74,13 +74,14 @@ export default {
       if (this.text) {
         let element = document.querySelector("#qrcode");
         element.innerHTML = "";
-       let qrCode = new QRCode(element, {
+        let qrCode = new QRCode(element, {
           text: this.text,
           width: 150,
           height: 150,
           colorDark: "blue",
         });
         this.qrCodeImage = qrCode._el.firstChild.toDataURL();
+        this.text = "";
       }
     },
     open() {
