@@ -24,7 +24,7 @@
                 class="flex duration-[1s] pt-[20px]"
                 :class="!show ? 'opacity-[0]' : 'opacity-[1]'"
                 id="qrcode"
-                ref="qrCanvas"
+                ref="qrCode"
                 @click="downloadImage($event)"
               >
                 <a :href="downloadLink"></a>
@@ -39,7 +39,7 @@
                   <i class="fa-regular fa-circle-check"></i>
                 </button>
                 <button
-                  :href="downloadLink"
+                  @click="downloadQRCode()"
                   v-if="show"
                   class="btn rounded-[12px] w-[120px] bg-blue-700 text-white p-[10px] text-[18px] active:scale-[0.97] flex-auto"
                 >
@@ -67,7 +67,7 @@ export default {
     return {
       text: "",
       show: false,
-      downloadLink: "",
+      qrCodeImage: "",
     };
   },
   methods: {
@@ -75,12 +75,13 @@ export default {
       if (this.text) {
         let element = document.querySelector("#qrcode");
         element.innerHTML = "";
-        new QRCode(element, {
-          text: String(this.text),
+       let qrCode = new QRCode(element, {
+          text: this.text,
           width: 150,
           height: 150,
           colorDark: "blue",
         });
+        this.qrCodeImage = qrCode._el.firstChild.toDataURL();
       }
     },
     open() {
@@ -145,9 +146,11 @@ export default {
       });
     },
 
-    downloadImage(event) {
-        console.log(event.target.src);
-      this.downloadLink = event.target.src;
+    downloadQRCode() {
+      var link = document.createElement("a");
+      link.href = this.qrCodeImage;
+      link.download = "qr_code.png";
+      link.click();
     },
   },
 };
