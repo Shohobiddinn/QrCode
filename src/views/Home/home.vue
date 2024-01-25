@@ -38,13 +38,13 @@
                 >
                   <i class="fa-regular fa-circle-check"></i>
                 </button>
-                <a
+                <button
                   :href="downloadLink"
                   v-if="show"
                   class="btn rounded-[12px] w-[120px] bg-blue-700 text-white p-[10px] text-[18px] active:scale-[0.97] flex-auto"
                 >
                   <i class="fa-solid fa-download"></i>
-                </a>
+                </button>
                 <button
                   v-if="show"
                   @click="printReceipt()"
