@@ -14,7 +14,6 @@
                 rows="5"
                 placeholder="Matn kiriting..."
                 v-model="text"
-                @input="open()"
               ></textarea>
             </div>
             <div
