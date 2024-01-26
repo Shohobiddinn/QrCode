@@ -39,31 +39,62 @@
   
   <script>
 import axios from "axios";
-
+axios.defaults.withCredentials = true;
 export default {
   data() {
     return {
       users: [],
     };
   },
- 
-  methods: {
-    async getAllUsers() {
-      try {
-        const response = await axios.get(
-          "https://mycorse.onrender.com/https://trustcheck.pythonanywhere.com/api/get-all-user",
-          {
-            auth: {
-              username: "admin",
-              password: "1",
-            },
-          }
-        );
 
-        this.users = response.data.results;
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
+  methods: {
+    getAllUsers() {
+      axios
+        .get("https://mycorse.onrender.com/https://trustcheck.pythonanywhere.com/api/get-all-user", {
+          headers: {
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Access-Control-Allow-Origin": "*",
+          },
+          auth: {
+            username: "admin",
+            password: "1",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          Swal.mixin({
+            toast: true,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          }).fire({
+            icon: "success",
+            title: "Muvaffaqiyatli",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.mixin({
+            toast: true,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          }).fire({
+            icon: "error",
+            title: "Ma'lumot kiriting",
+          });
+        });
     },
   },
   created() {
