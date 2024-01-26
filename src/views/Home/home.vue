@@ -100,7 +100,7 @@
           </td>
 
           <td class="italic px-[20px] py-[7px] cursor-pointer">
-            {{ item?.date_joined }}
+            {{ item?.date_joined.slice(0,10) }}
           </td>
         </tr>
       </tbody>
