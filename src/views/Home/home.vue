@@ -1,6 +1,7 @@
 <template>
   <div>
-    <!-- <div
+    <div
+      v-if="false"
       class="flex flex-col max-h-[200px] overflow-x-scroll border-[3px] border-blue-500 mt-[100px]"
       @scroll="scroll($event)"
     >
@@ -11,8 +12,8 @@
       >
         {{ item }}
       </div>
-    </div> -->
-    <div>
+    </div>
+    <div v-if="false">
       <div class="container">
         <div class="flex justify-center items-center flex-col h-[100vh]">
           <h1 class="text-[30px] font-bold mb-[20px]">Ma'lumot kiriting</h1>
@@ -69,18 +70,59 @@
         </div>
       </div>
     </div>
+    <h1 class="text-[32px] text-center font-bold">Foydalanuvchilar</h1>
+    <table
+    v-if="users.length"
+      class="table-autop-2 mt-[30px] rounded-[20px] sm:w-full *:dark:text-gray-900"
+    >
+      <thead class="">
+        <tr class="*:border-2 *:border-black">
+          <th class="text-[20px] font-bold italic py-[10px]">Foydalanuvchi</th>
+          <th class="text-[20px] font-bold italic">F.I.O</th>
+          <th class="text-[20px] font-bold italic">Gmail</th>
+          <th class="text-[20px] font-bold italic">Vaqti</th>
+        </tr>
+      </thead>
+      <tbody class="">
+        <tr
+          v-for="item in users"
+          :key="item.id"
+          class="odd:bg-gray-400 even:bg-white even:text-gray-500 hover:bg-blue-500 hover:text-white duration-[0.5s] *:border-2 *:border-black"
+        >
+          <td class="italic px-[20px] py-[7px] cursor-pointer">
+            {{ item?.username }}
+          </td>
+          <td class="italic px-[20px] py-[7px] cursor-pointer">
+            {{ item?.first_name }} {{ item?.last_name }}
+          </td>
+          <td class="italic px-[20px] py-[7px] cursor-pointer">
+            {{ item?.email }}
+          </td>
+
+          <td class="italic px-[20px] py-[7px] cursor-pointer">
+            {{ item?.date_joined }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <DataNotFound v-if="!users.length" />
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import store from "../../store";
+import DataNotFound from "../../components/DataNotFound/DataNotFound.vue";
 export default {
   data() {
     return {
       text: "",
       show: false,
       qrCodeImage: "",
+      users: [],
     };
   },
+  components: { DataNotFound },
   methods: {
     createQrcode() {
       if (this.text) {
@@ -172,7 +214,7 @@ export default {
           this.current_page = this.current_page + 1;
         }
       }
-    //   console.log(element.scrollTop );
+      //   console.log(element.scrollTop );
       if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
         console.log(
           element.scrollTop + element.clientHeight,
@@ -181,6 +223,29 @@ export default {
         );
       }
     },
+    async getAllUsers() {
+      await store.dispatch("setLoading", true);
+      try {
+        const response = await axios.get(
+          "https://mycorse.onrender.com/https://trustcheck.pythonanywhere.com/api/get-all-user",
+          {
+            auth: {
+              username: "admin",
+              password: "1",
+            },
+          }
+        );
+
+        this.users = response.data.results;
+        await store.dispatch("setLoading", false);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        await store.dispatch("setLoading", false);
+      }
+    },
+  },
+  created() {
+    this.getAllUsers();
   },
 };
 </script>
