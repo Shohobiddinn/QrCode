@@ -70,42 +70,46 @@
         </div>
       </div>
     </div>
-    <h1 class="text-[32px] text-center font-bold">Foydalanuvchilar</h1>
-    <table
-    v-if="users.length"
-      class="table-autop-2 mt-[30px] rounded-[20px] sm:w-full *:dark:text-gray-900"
-    >
-      <thead class="">
-        <tr class="*:border-2 *:border-black">
-          <th class="text-[20px] font-bold italic py-[10px]">Foydalanuvchi</th>
-          <th class="text-[20px] font-bold italic">F.I.O</th>
-          <th class="text-[20px] font-bold italic">Gmail</th>
-          <th class="text-[20px] font-bold italic">Vaqti</th>
-        </tr>
-      </thead>
-      <tbody class="">
-        <tr
-          v-for="item in users"
-          :key="item.id"
-          class="odd:bg-gray-400 even:bg-white even:text-gray-500 hover:bg-blue-500 hover:text-white duration-[0.5s] *:border-2 *:border-black"
-        >
-          <td class="italic px-[20px] py-[7px] cursor-pointer">
-            {{ item?.username }}
-          </td>
-          <td class="italic px-[20px] py-[7px] cursor-pointer">
-            {{ item?.first_name }} {{ item?.last_name }}
-          </td>
-          <td class="italic px-[20px] py-[7px] cursor-pointer">
-            {{ item?.email }}
-          </td>
+    <div class="container">
+      <h1 class="text-[32px] text-center font-bold">Foydalanuvchilar</h1>
+      <table
+        v-if="users.length"
+        class="table-autop-2 mt-[30px] rounded-[20px] sm:w-full *:dark:text-gray-900"
+      >
+        <thead class="">
+          <tr class="*:border-2 *:border-black">
+            <th class="text-[20px] font-bold italic py-[10px]">
+              Foydalanuvchi
+            </th>
+            <th class="text-[20px] font-bold italic">F.I.O</th>
+            <th class="text-[20px] font-bold italic">Gmail</th>
+            <th class="text-[20px] font-bold italic">Vaqti</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr
+            v-for="item in users"
+            :key="item.id"
+            class="odd:bg-gray-400 even:bg-white even:text-gray-500 hover:bg-blue-500 hover:text-white duration-[0.5s] *:border-2 *:border-black"
+          >
+            <td class="italic px-[20px] py-[7px] cursor-pointer">
+              {{ item?.username }}
+            </td>
+            <td class="italic px-[20px] py-[7px] cursor-pointer">
+              {{ item?.first_name }} {{ item?.last_name }}
+            </td>
+            <td class="italic px-[20px] py-[7px] cursor-pointer">
+              {{ item?.email }}
+            </td>
 
-          <td class="italic px-[20px] py-[7px] cursor-pointer">
-            {{ item?.date_joined.slice(0,10) }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <DataNotFound v-if="!users.length" />
+            <td class="italic px-[20px] py-[7px] cursor-pointer">
+              {{ item?.date_joined.slice(0, 10) }}
+            </td>
+          </tr>
+        </tbody>
+        <DataNotFound v-if="!users.length" />
+      </table>
+    </div>
   </div>
 </template>
 
